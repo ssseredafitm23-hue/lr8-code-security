@@ -1,0 +1,16 @@
+=== Normal list ===
+1: Laptop
+2: Monitor
+Exit code: 0
+=== Normal add ===
+Added: Keyboard
+Exit code: 0
+=== Search record ===
+Found: Laptop
+Exit code: 0
+=== Delete record ===
+Deleted: Monitor
+Exit code: 0
+=== Boundary input ===
+Invalid record length
+Exit code: 2

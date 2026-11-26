@@ -4,7 +4,7 @@
 
 #define CAPACITY 3
 
-static void list_records(char *records[])
+static void list_records(char *const records[])
 {
     for (int i = 0; i < CAPACITY; i++) {
         if (records[i])
@@ -15,7 +15,14 @@ static void list_records(char *records[])
 static int add_record(char *records[], const char *input)
 {
     char name[32];
-    strcpy(name, input);
+    size_t len = strlen(input);
+
+    if (len == 0 || len >= sizeof(name)) {
+        fputs("Invalid record length\n", stderr);
+        return 2;
+    }
+
+    memcpy(name, input, len + 1);
 
     for (int i = 0; i < CAPACITY; i++) {
         if (!records[i]) {
@@ -44,6 +51,7 @@ static int search_record(char *records[], const char *input)
             printf("Found: %s\n", records[i]);
     }
 
+    free(query);
     return 0;
 }
 
@@ -52,8 +60,8 @@ static int delete_record(char *records[], const char *input)
     for (int i = 0; i < CAPACITY; i++) {
         if (records[i] && strcmp(records[i], input) == 0) {
             char *name = records[i];
-            free(name);
             printf("Deleted: %s\n", name);
+            free(name);
             records[i] = NULL;
             return 0;
         }

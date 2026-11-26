@@ -3,6 +3,7 @@ set -eo pipefail
 
 PHASE="${1:-before}"
 mkdir -p "reports/$PHASE"
+mkdir -p build
 
 echo "=== Cppcheck ==="
 cppcheck --enable=warning,style,performance,portability \

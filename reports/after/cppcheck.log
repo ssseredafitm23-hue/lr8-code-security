@@ -1,0 +1,4 @@
+Checking src/records.c ...
+src/records.c:7:38: style: Parameter 'records' can be declared as const array [constParameter]
+static void list_records(char *const records[])
+                                     ^

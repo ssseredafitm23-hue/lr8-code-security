@@ -1,0 +1,86 @@
+=== Normal list ===
+==10803== Memcheck, a memory error detector
+==10803== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.
+==10803== Using Valgrind-3.27.1 and LibVEX; rerun with -h for copyright info
+==10803== Command: ./build/records list
+==10803== 
+1: Laptop
+2: Monitor
+==10803== 
+==10803== HEAP SUMMARY:
+==10803==     in use at exit: 0 bytes in 0 blocks
+==10803==   total heap usage: 3 allocs, 3 frees, 4,111 bytes allocated
+==10803== 
+==10803== All heap blocks were freed -- no leaks are possible
+==10803== 
+==10803== For lists of detected and suppressed errors, rerun with: -s
+==10803== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Exit code: 0
+=== Normal add ===
+==10812== Memcheck, a memory error detector
+==10812== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.
+==10812== Using Valgrind-3.27.1 and LibVEX; rerun with -h for copyright info
+==10812== Command: ./build/records add Keyboard
+==10812== 
+Added: Keyboard
+==10812== 
+==10812== HEAP SUMMARY:
+==10812==     in use at exit: 0 bytes in 0 blocks
+==10812==   total heap usage: 4 allocs, 4 frees, 4,120 bytes allocated
+==10812== 
+==10812== All heap blocks were freed -- no leaks are possible
+==10812== 
+==10812== For lists of detected and suppressed errors, rerun with: -s
+==10812== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Exit code: 0
+=== Search record ===
+==10821== Memcheck, a memory error detector
+==10821== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.
+==10821== Using Valgrind-3.27.1 and LibVEX; rerun with -h for copyright info
+==10821== Command: ./build/records search Laptop
+==10821== 
+Found: Laptop
+==10821== 
+==10821== HEAP SUMMARY:
+==10821==     in use at exit: 0 bytes in 0 blocks
+==10821==   total heap usage: 4 allocs, 4 frees, 4,118 bytes allocated
+==10821== 
+==10821== All heap blocks were freed -- no leaks are possible
+==10821== 
+==10821== For lists of detected and suppressed errors, rerun with: -s
+==10821== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Exit code: 0
+=== Delete record ===
+==10822== Memcheck, a memory error detector
+==10822== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.
+==10822== Using Valgrind-3.27.1 and LibVEX; rerun with -h for copyright info
+==10822== Command: ./build/records delete Monitor
+==10822== 
+Deleted: Monitor
+==10822== 
+==10822== HEAP SUMMARY:
+==10822==     in use at exit: 0 bytes in 0 blocks
+==10822==   total heap usage: 3 allocs, 3 frees, 4,111 bytes allocated
+==10822== 
+==10822== All heap blocks were freed -- no leaks are possible
+==10822== 
+==10822== For lists of detected and suppressed errors, rerun with: -s
+==10822== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Exit code: 0
+=== Boundary input ===
+==10839== Memcheck, a memory error detector
+==10839== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.
+==10839== Using Valgrind-3.27.1 and LibVEX; rerun with -h for copyright info
+==10839== Command: ./build/records add AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+==10839== 
+Invalid record length
+==10839== 
+==10839== HEAP SUMMARY:
+==10839==     in use at exit: 0 bytes in 0 blocks
+==10839==   total heap usage: 2 allocs, 2 frees, 15 bytes allocated
+==10839== 
+==10839== All heap blocks were freed -- no leaks are possible
+==10839== 
+==10839== For lists of detected and suppressed errors, rerun with: -s
+==10839== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Exit code: 2
