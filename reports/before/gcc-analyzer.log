@@ -1,0 +1,46 @@
+src/records.c: In function ‘delete_record’:
+src/records.c:56:13: warning: pointer ‘name’ used after ‘free’ [-Wuse-after-free=]
+   56 |             printf("Deleted: %s\n", name);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/records.c:55:13: note: call to ‘free’ here
+   55 |             free(name);
+      |             ^~~~~~~~~~
+src/records.c: In function ‘search_record’:
+src/records.c:47:12: warning: leak of ‘query’ [CWE-401] [-Wanalyzer-malloc-leak]
+   47 |     return 0;
+      |            ^
+  ‘search_record’: events 1-4
+   36 |     char *query = malloc(strlen(input) + 1);
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   (1) allocated here
+   37 |     if (!query)
+      |        ~           
+      |        |
+      |        (2) assuming ‘query’ is non-NULL
+      |        (3) following ‘false’ branch (when ‘query’ is non-NULL)... ─>─┐
+      |                                                                      │
+......
+      |                                                                      │
+      |┌─────────────────────────────────────────────────────────────────────┘
+   40 |│    strcpy(query, input);
+      |│    ~~~~~~~~~~~~~~~~~~~~
+      |│    |
+      |└───>(4) ...to here
+  ‘search_record’: events 5-7
+   42 |     for (int i = 0; i < CAPACITY; i++) {
+      |                       ^
+      |                       |
+      |                       (5) following ‘true’ branch (when ‘i <= 2’)... ─>─┐
+      |                                                                         │
+      |                                                                         │
+      |┌────────────────────────────────────────────────────────────────────────┘
+   43 |│        if (records[i] && strstr(records[i], query))
+      |│                   ~   
+      |│                   |
+      |└──────────────────>(6) ...to here
+......
+   47 |     return 0;
+      |            ~           
+      |            |
+      |            (7) ⚠️  ‘query’ leaks here; was allocated at (1)

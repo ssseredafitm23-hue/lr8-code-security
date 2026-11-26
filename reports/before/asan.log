@@ -1,0 +1,134 @@
+=== Normal list ===
+1: Laptop
+2: Monitor
+Exit code: 0
+=== Normal add ===
+Added: Keyboard
+Exit code: 0
+=== Search record ===
+
+=================================================================
+==9190==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 7 byte(s) in 1 object(s) allocated from:
+    #0 0x7fa83032435f in malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:67
+    #1 0x558b6756856b in search_record src/records.c:36
+    #2 0x558b67568ac3 in main src/records.c:85
+    #3 0x7fa830033fb9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:59
+    #4 0x7fff1b6ff199  (<unknown module>)
+
+SUMMARY: AddressSanitizer: 7 byte(s) leaked in 1 allocation(s).
+Exit code: 1
+=== Delete record ===
+=================================================================
+==9193==ERROR: AddressSanitizer: heap-use-after-free on address 0x7b5a05be0030 at pc 0x7f3a06ccb560 bp 0x7ffc2eca2570 sp 0x7ffc2eca1d30
+READ of size 2 at 0x7b5a05be0030 thread T0
+    #0 0x7f3a06ccb55f in printf_common ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors_format.inc:567
+    #1 0x7f3a06cec08a in vprintf ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:1731
+    #2 0x7f3a06cee084 in printf ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:1791
+    #3 0x55ff3aaab799 in delete_record src/records.c:56
+    #4 0x55ff3aaabb4f in main src/records.c:87
+    #5 0x7f3a06a33fb9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:59
+    #6 0x7f3a06a340d6 in __libc_start_main_impl ../csu/libc-start.c:360
+    #7 0x55ff3aaab160 in _start (/home/kali/projects/lr8-code-security/build/records-asan+0x1160) (BuildId: 2032d92203cb5e9ff5b8c46baac4e266980a6af5)
+
+0x7b5a05be0030 is located 0 bytes inside of 8-byte region [0x7b5a05be0030,0x7b5a05be0038)
+freed by thread T0 here:
+    #0 0x7f3a06d2340f in free ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:51
+    #1 0x55ff3aaab77e in delete_record src/records.c:55
+    #2 0x55ff3aaabb4f in main src/records.c:87
+    #3 0x7f3a06a33fb9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:59
+    #4 0x7ffc2eca3198  (<unknown module>)
+
+previously allocated by thread T0 here:
+    #0 0x7f3a06d1da04 in strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:617
+    #1 0x55ff3aaab8c4 in main src/records.c:69
+    #2 0x7f3a06a33fb9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:59
+    #3 0x7ffc2eca3198  (<unknown module>)
+
+SUMMARY: AddressSanitizer: heap-use-after-free src/records.c:56 in delete_record
+Shadow bytes around the buggy address:
+  0x7b5a05bdfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b5a05bdfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b5a05bdfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b5a05bdff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b5a05bdff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x7b5a05be0000: fa fa 07 fa fa fa[fd]fa fa fa fa fa fa fa fa fa
+  0x7b5a05be0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7b5a05be0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7b5a05be0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7b5a05be0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7b5a05be0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==9193==ABORTING
+Exit code: 1
+=== Boundary input ===
+=================================================================
+==9194==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7b60659f00c0 at pc 0x7f6067eb86e2 bp 0x7fffdc773d60 sp 0x7fffdc773520
+WRITE of size 33 at 0x7b60659f00c0 thread T0
+    #0 0x7f6067eb86e1 in strcpy ../../../../src/libsanitizer/asan/asan_interceptors.cpp:575
+    #1 0x55fb00c63382 in add_record src/records.c:18
+    #2 0x55fb00c63a37 in main src/records.c:83
+    #3 0x7f6067c33fb9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:59
+    #4 0x7f6067c340d6 in __libc_start_main_impl ../csu/libc-start.c:360
+    #5 0x55fb00c63160 in _start (/home/kali/projects/lr8-code-security/build/records-asan+0x1160) (BuildId: 2032d92203cb5e9ff5b8c46baac4e266980a6af5)
+
+Address 0x7b60659f00c0 is located in stack of thread T0 at offset 64 in frame
+    #0 0x55fb00c632f2 in add_record src/records.c:16
+
+  This frame has 1 object(s):
+    [32, 64) 'name' (line 17) <== Memory access at offset 64 overflows this variable
+HINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork
+      (longjmp and C++ exceptions *are* supported)
+SUMMARY: AddressSanitizer: stack-buffer-overflow src/records.c:18 in add_record
+Shadow bytes around the buggy address:
+  0x7b60659efe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b60659efe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b60659eff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b60659eff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b60659f0000: f1 f1 f1 f1 00 00 00 f3 f3 f3 f3 f3 f3 f3 f3 f3
+=>0x7b60659f0080: f1 f1 f1 f1 00 00 00 00[f3]f3 f3 f3 f3 f3 f3 f3
+  0x7b60659f0100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b60659f0180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b60659f0200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b60659f0280: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b60659f0300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==9194==ABORTING
+Exit code: 1
